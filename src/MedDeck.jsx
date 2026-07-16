@@ -123,6 +123,8 @@ const SECTIONS = {
   BB: { key:"BB", label:"Bio / Biochem", short:"B/B", color:"#e85a9c", soft:"#ffe1ef", emoji:"🌸" },
   CP: { key:"CP", label:"Chem / Physics", short:"C/P", color:"#7b6ef0", soft:"#e9e6ff", emoji:"🌷" },
   PS: { key:"PS", label:"Psych / Soc", short:"P/S", color:"#3f9a6c", soft:"#dcf4e7", emoji:"🌿" },
+  OC: { key:"OC", label:"Organic Chem", short:"OChem", color:"#c96a2b", soft:"#ffe7d1", emoji:"🍁" },
+  DV: { key:"DV", label:"Development", short:"Dev", color:"#8a5cd6", soft:"#ece0ff", emoji:"🌻" },
 };
 const DIFFS = {
   foundation:{ label:"Foundation", color:"#5fb98a", emoji:"🌱" },
@@ -2229,6 +2231,709 @@ const NEW_BANK2 = [
 ];
 BANK.push(...NEW_BANK2);
 
+/* ----------------------------------------------------------------------------
+   4e. ORGANIC CHEM (OC) + DEVELOPMENT (DV) — with baby-mode ELI5 explanations.
+   Every card carries a `baby` field so FlashcardMode / QuizMode can render
+   an "Explain like I'm 5" block right under the clinical anchor.
+---------------------------------------------------------------------------- */
+const NEW_BANK3 = [
+/* ============================ ORGANIC CHEM (OC) ============================ */
+{ id:"oc1", section:"OC", topic:"SN2", difficulty:"foundation", dia:null,
+  q:"Which substrate reacts FASTEST in an SN2 reaction with hydroxide?",
+  choices:["1-bromobutane (primary)","2-bromobutane (secondary)","2-bromo-2-methylpropane (tertiary)","Neopentyl bromide"], answer:0,
+  exp:[
+    "Correct. SN2 is a one-step backside attack. Less steric bulk around the carbon = faster. Primary alkyl halides are ideal.",
+    "Secondary substrates react but slower; steric hindrance grows.",
+    "Tertiary substrates essentially don't do SN2 — no room for backside attack. They favor SN1/E1.",
+    "Neopentyl is primary but has a bulky t-butyl neighbor blocking the backside — famously slow at SN2."],
+  clinical:"Drug design: alkylating chemotherapy agents (e.g., cyclophosphamide metabolites) use SN2-like backside attack on DNA guanine N7.",
+  baby:"SN2 is like sneaking up behind someone and pushing them out of a chair from the back. If the person has huge shoulder pads (bulky groups), you can't get behind them. So the smallest, least-crowded carbon wins." },
+
+{ id:"oc2", section:"OC", topic:"SN1", difficulty:"medium", dia:null,
+  q:"An SN1 reaction on (R)-3-bromo-3-methylhexane produces:",
+  choices:["A racemic mixture of R and S alcohols","Only the R alcohol (retention)","Only the S alcohol (inversion)","No product forms"], answer:0,
+  exp:[
+    "Correct. SN1 goes through a planar carbocation intermediate. The nucleophile can attack from either face, so you get roughly 50/50 R and S — racemization.",
+    "Retention would require the stereocenter to be preserved, which the flat carbocation destroys.",
+    "Pure inversion is SN2's signature (Walden inversion), not SN1.",
+    "Tertiary substrates readily form stable carbocations — SN1 proceeds well."],
+  clinical:"Racemization matters in pharmacology because enantiomers can have wildly different effects (e.g., (S)-thalidomide's teratogenicity vs (R)-thalidomide's sedative action).",
+  baby:"SN1 flattens the carbon into a pancake for a moment, then the water can flip a coin and attack from top or bottom. Half the time you get one hand, half the time the other. That's racemization." },
+
+{ id:"oc3", section:"OC", topic:"SN1 vs SN2", difficulty:"medium", dia:null,
+  q:"Which solvent BEST accelerates an SN2 reaction?",
+  choices:["DMSO (polar aprotic)","Water (polar protic)","Methanol (polar protic)","Ethanol (polar protic)"], answer:0,
+  exp:[
+    "Correct. Polar aprotic solvents (DMSO, DMF, acetone, acetonitrile) solvate cations but leave the nucleophile 'naked' and reactive — great for SN2.",
+    "Water H-bonds to the nucleophile, caging it and slowing SN2. But it stabilizes carbocations, so it favors SN1.",
+    "Methanol is protic — same problem as water.",
+    "Ethanol is protic — favors SN1/E1 over SN2."],
+  clinical:"Reaction conditions in drug synthesis are chosen carefully; the wrong solvent switches the mechanism and the stereochemistry of the product.",
+  baby:"Protic solvents (with H-O or H-N) hug the nucleophile like a blanket and won't let it attack. Aprotic solvents leave the nucleophile mad and ready to fight — perfect for SN2." },
+
+{ id:"oc4", section:"OC", topic:"E2 elimination", difficulty:"medium", dia:null,
+  q:"E2 elimination of 2-bromobutane with strong base produces mainly:",
+  choices:["2-butene (more substituted, Zaitsev)","1-butene (less substituted, Hofmann)","Butane","Butanol"], answer:0,
+  exp:[
+    "Correct. Zaitsev's rule: the more substituted alkene (more R groups on C=C) is more stable and is the major product with small bases.",
+    "The less substituted (Hofmann) product dominates only with bulky bases like tert-butoxide.",
+    "Butane would require reduction, not elimination.",
+    "Butanol would be substitution (SN1/SN2), not elimination."],
+  clinical:"Understanding stereochemistry-driven elimination underlies enzymatic dehydration steps like fumarase in the Krebs cycle.",
+  baby:"When making a double bond, the plant that's bigger and more supported (more branches around it) is stronger and wins. That's Zaitsev — bigger alkene, more stable." },
+
+{ id:"oc5", section:"OC", topic:"E2 stereochemistry", difficulty:"hard", dia:null,
+  q:"E2 requires the H being removed and the leaving group to be:",
+  choices:["Anti-periplanar (180° dihedral)","Syn-periplanar (0° dihedral)","Gauche (60°)","Perpendicular"], answer:0,
+  exp:[
+    "Correct. E2 is concerted — H and LG leave together in the same step, and the geometry that lets orbitals overlap for the forming π bond is anti-periplanar.",
+    "Syn-periplanar E2 is possible but energetically unfavorable due to eclipsing strain in the transition state.",
+    "Gauche does not give proper orbital alignment for the π bond.",
+    "Perpendicular is not a defined torsion angle for this."],
+  clinical:"Ring systems (cyclohexanes) can lock into geometries that prevent anti-periplanar arrangement — some reactions won't proceed until a chair flip.",
+  baby:"Imagine ripping off two pieces of tape from opposite sides at the same time. If they're on the same side, they get tangled. If they're straight across (anti), they slide off clean." },
+
+{ id:"oc6", section:"OC", topic:"E1", difficulty:"medium", dia:null,
+  q:"E1 and SN1 both go through a carbocation. What favors E1 over SN1?",
+  choices:["Higher temperature","Lower temperature","Polar protic solvent","Tertiary substrate"], answer:0,
+  exp:[
+    "Correct. Heat drives elimination (increases entropy — more gas-phase-like products). E1 dominates at higher temperatures.",
+    "Low temperatures favor substitution products.",
+    "Polar protic solvents favor both E1 and SN1 equally by stabilizing the carbocation.",
+    "Tertiary substrates form both E1 and SN1; that alone doesn't pick between them."],
+  clinical:"Thermodynamic vs kinetic control principles apply broadly in medicinal chemistry synthesis.",
+  baby:"Heat gives molecules the energy to throw things away (like a proton and electrons to make a double bond) instead of just swapping partners. Hot = kick stuff out = elimination." },
+
+{ id:"oc7", section:"OC", topic:"Alkene hydrogenation", difficulty:"foundation", dia:null,
+  q:"Alkene + H2 with a Pd/C or Pt catalyst gives:",
+  choices:["Alkane (syn addition of H's)","Alkyne (dehydrogenation)","Alcohol","Alkyl halide"], answer:0,
+  exp:[
+    "Correct. Catalytic hydrogenation adds H–H across the C=C. Both H's add to the SAME face (syn) because they come off the metal surface together.",
+    "Alkyne would require removing H's, opposite direction.",
+    "No oxygen source, so no alcohol.",
+    "No halide source, so no alkyl halide."],
+  clinical:"Partial hydrogenation of vegetable oils creates trans fats (bad); food industry now uses full hydrogenation or interesterification.",
+  baby:"You lay the alkene flat on a metal pan and stick two hydrogens onto the top face. Both H's arrive from above, same side — that's syn addition." },
+
+{ id:"oc8", section:"OC", topic:"Halogenation (anti addition)", difficulty:"medium", dia:null,
+  q:"Alkene + Br2 (in CCl4) gives:",
+  choices:["Vicinal dibromide with anti (trans) stereochemistry","Vicinal dibromide with syn (cis) stereochemistry","Allylic bromide (single Br)","Alkyl monobromide with H replacement"], answer:0,
+  exp:[
+    "Correct. Br2 forms a bromonium ion (3-membered ring); the second Br⁻ attacks from the opposite face, giving anti addition.",
+    "Syn addition happens in hydrogenation and OsO4, not halogenation.",
+    "Allylic bromination (single Br at the allylic C) requires NBS + light or heat, not Br2/CCl4.",
+    "Br2 adds across the double bond; it doesn't replace an H at this step."],
+  clinical:"Bromine water is a classic organic chem test: decolorization confirms an alkene or alkyne is present.",
+  baby:"Two bromines want the double bond. The first Br grabs one face and blocks the other. The second Br has no choice — it comes from the other side. That's anti." },
+
+{ id:"oc9", section:"OC", topic:"Markovnikov addition", difficulty:"foundation", dia:null,
+  q:"Propene + HBr (no peroxide) gives predominantly:",
+  choices:["2-bromopropane","1-bromopropane","Propanol","Propane"], answer:0,
+  exp:[
+    "Correct. Markovnikov's rule: H adds to the C with more H's, halide to the C with fewer H's — because the more substituted carbocation intermediate is more stable.",
+    "1-bromopropane forms via the less stable primary carbocation; it's the minor product.",
+    "No water present, so no alcohol.",
+    "Would require full reduction, not addition of HBr."],
+  clinical:"'Markovnikov selectivity' shapes how the body metabolizes many hydration reactions in fatty acid biosynthesis.",
+  baby:"'The rich get richer.' The carbon with more H's already gets the new H. The Br goes to the carbon that had fewer H's, because that's where the carbocation feels most safe (more neighbors = more support)." },
+
+{ id:"oc10", section:"OC", topic:"Anti-Markovnikov (peroxide)", difficulty:"medium", dia:null,
+  q:"Propene + HBr WITH peroxides (ROOR, hv) gives predominantly:",
+  choices:["1-bromopropane","2-bromopropane","Propane","Propanol"], answer:0,
+  exp:[
+    "Correct. Peroxides initiate a radical chain: Br• adds to give the more stable radical (secondary), placing H on the more substituted C. Net: Br ends up on the terminal C — 'anti-Markovnikov.'",
+    "That would be the regular Markovnikov product (no peroxides).",
+    "Would require reduction, not radical addition.",
+    "No water source for an alcohol."],
+  clinical:"Radical chemistry underlies lipid peroxidation in atherosclerosis and vitamin E's role as a chain-breaking antioxidant.",
+  baby:"Peroxides flip the rule. Now the reaction goes through a RADICAL instead of a carbocation, and the radical likes the middle carbon best. So the Br ends up on the OUTSIDE this time." },
+
+{ id:"oc11", section:"OC", topic:"Hydroboration-oxidation", difficulty:"medium", dia:null,
+  q:"1-methylcyclohexene treated with BH3 then H2O2/OH⁻ gives:",
+  choices:["trans-2-methylcyclohexanol (anti-Markovnikov, syn addition)","1-methylcyclohexanol (Markovnikov)","cis-2-methylcyclohexanol","2-methylcyclohexanone"], answer:0,
+  exp:[
+    "Correct. Hydroboration is syn (both add to same face) AND anti-Markovnikov (OH on less substituted C). Boron is bulky and steric factors push it to less crowded C.",
+    "Would be the Markovnikov product from acid-catalyzed hydration.",
+    "Syn addition is correct but the OH ends up trans to the methyl due to the geometry of BH addition.",
+    "Hydroboration-oxidation makes alcohols, not ketones."],
+  clinical:"Precise regio- and stereo-selective hydration is central to steroid and prostaglandin drug synthesis.",
+  baby:"Boron is chunky and wants to sit on the less crowded carbon. Later, an OH takes its place on that same spot. So you get the anti-Markovnikov alcohol, and both new pieces are on the same face (syn)." },
+
+{ id:"oc12", section:"OC", topic:"Ozonolysis", difficulty:"medium", dia:null,
+  q:"Ozonolysis (O3, then Zn or DMS) of 2-methyl-2-butene gives:",
+  choices:["Acetone + acetaldehyde","Acetic acid + propanoic acid","Two molecules of acetone","2-butanol"], answer:0,
+  exp:[
+    "Correct. Ozonolysis with reductive workup (Zn or DMS) cleaves the C=C, replacing each C with =O. The internal alkene C(CH3)=CH gives (CH3)2C=O (acetone) and CH3CHO (acetaldehyde).",
+    "That would require oxidative workup (H2O2), which converts aldehydes further to carboxylic acids.",
+    "Ozonolysis products depend on the alkene's substitution; here the two carbons of the C=C carry different substituents.",
+    "Ozonolysis is a cleavage reaction, not a hydration."],
+  clinical:"Ozonolysis-based degradation was historically used to determine the structure of unknown alkenes, a foundation for modern spectroscopic identification.",
+  baby:"Ozone is molecular scissors. Wherever there's a C=C, it cuts it in half and puts an =O on each end. If Zn cleans up, aldehydes stay; if H2O2 cleans up, they get pushed all the way to acids." },
+
+{ id:"oc13", section:"OC", topic:"Alcohol oxidation", difficulty:"medium", dia:null,
+  q:"Oxidation of a PRIMARY alcohol with PCC (pyridinium chlorochromate) in dry CH2Cl2 gives:",
+  choices:["Aldehyde (stops at the aldehyde)","Carboxylic acid (goes all the way)","Ketone","Ester"], answer:0,
+  exp:[
+    "Correct. PCC is a mild oxidant. It converts 1° alcohols to aldehydes and stops there because there's no water present to over-oxidize.",
+    "Stronger oxidants (K2Cr2O7, KMnO4, Jones = CrO3/H2SO4) push all the way to the carboxylic acid.",
+    "Ketones come from oxidation of SECONDARY alcohols, not primary.",
+    "Esters need a carboxylic acid + alcohol under acid catalysis (Fischer esterification), a different reaction."],
+  clinical:"Alcohol dehydrogenase in the liver converts ethanol → acetaldehyde (toxic hangover chemical) → acetate; PCC is the lab version that stops at the aldehyde.",
+  baby:"PCC is a 'polite' oxidizer: it takes the alcohol up one step to aldehyde and quits. Strong oxidizers keep pushing until it becomes a full carboxylic acid." },
+
+{ id:"oc14", section:"OC", topic:"Alcohol oxidation", difficulty:"foundation", dia:null,
+  q:"Oxidation of a SECONDARY alcohol (like 2-butanol) gives:",
+  choices:["Ketone","Aldehyde","Carboxylic acid","No reaction"], answer:0,
+  exp:[
+    "Correct. 2° alcohols oxidize to ketones (only one H on the C-OH to lose). Ketones can't easily oxidize further under standard conditions.",
+    "Aldehydes come from 1° alcohols (two H's on the C-OH).",
+    "Would require breaking a C–C bond, which standard oxidation doesn't do.",
+    "2° alcohols definitely oxidize."],
+  clinical:"Isopropanol (rubbing alcohol) is metabolized to acetone — this is how the sweet, fruity acetone breath of DKA also appears with isopropanol ingestion.",
+  baby:"A secondary alcohol has one H sitting next to the OH. Oxidation swaps that H and the OH for a =O, making a ketone. Simple." },
+
+{ id:"oc15", section:"OC", topic:"Nucleophilic addition", difficulty:"foundation", dia:null,
+  q:"The carbonyl carbon (C=O) in an aldehyde is:",
+  choices:["Electrophilic (partial positive)","Nucleophilic (partial negative)","Neutral","Aromatic"], answer:0,
+  exp:[
+    "Correct. Oxygen pulls electrons via induction and via the π bond, leaving the carbonyl C partially positive (δ+) — a prime target for nucleophiles.",
+    "The oxygen is nucleophilic (has lone pairs, δ–), but the CARBON is electrophilic.",
+    "The C=O bond is highly polarized, not neutral.",
+    "Aromaticity requires a specific ring system with 4n+2 π electrons; a carbonyl alone is not aromatic."],
+  clinical:"Nucleophilic addition to carbonyls underlies enzyme mechanisms like serine proteases (Ser-OH attacks peptide C=O).",
+  baby:"Oxygen is greedy — it hoards electrons and leaves the carbon lonely and slightly positive. Nucleophiles (electron donors) love that lonely carbon and come running to donate." },
+
+{ id:"oc16", section:"OC", topic:"Acetal formation", difficulty:"medium", dia:null,
+  q:"An aldehyde + 2 equivalents of alcohol with acid catalyst gives:",
+  choices:["Acetal (two OR groups on the same C, water lost)","Hemiacetal (one OR, one OH)","Ester","Ether"], answer:0,
+  exp:[
+    "Correct. First alcohol adds → hemiacetal (OR + OH on same C). Under acid, water leaves and a second alcohol adds → acetal (two OR groups). Acetals need acid to form and to be hydrolyzed back.",
+    "Hemiacetal is the intermediate; equilibrium usually pushes to acetal with 2 equiv of alcohol.",
+    "Esters form from carboxylic acids + alcohols, not aldehydes.",
+    "Ethers involve two carbons bridged by one oxygen; acetal has TWO OR groups on one carbon."],
+  clinical:"Acetals are common in carbohydrate chemistry — glycosidic linkages between sugars in disaccharides (sucrose, lactose) are acetal bonds.",
+  baby:"An aldehyde is like a magnet for two alcohol friends. First one alcohol clicks on (hemiacetal). Then water leaves and a second alcohol clicks on the same spot (acetal). Two friends, one carbon." },
+
+{ id:"oc17", section:"OC", topic:"Imine formation", difficulty:"medium", dia:null,
+  q:"An aldehyde or ketone + PRIMARY amine (R-NH2) with mild acid gives:",
+  choices:["Imine (C=N-R, water lost)","Enamine","Amide","Nitrile"], answer:0,
+  exp:[
+    "Correct. Primary amines attack C=O, lose water, and form an imine (Schiff base). Optimal pH ~4–5 balances amine nucleophilicity and acid catalysis.",
+    "Enamines form from SECONDARY amines (no N-H left after attack, so a C=C shifts out instead of a C=N).",
+    "Amides come from carboxylic acid derivatives + amines, not aldehydes/ketones.",
+    "Nitriles have a triple bond (C≡N), require different chemistry."],
+  clinical:"Schiff bases are how enzymes like transaminases and rhodopsin (retinal binds lysine) mechanically hold substrates.",
+  baby:"A primary amine (–NH2) meets a carbonyl (C=O), they hug, one water gets squeezed out, and now the N replaces the O in the double bond: C=N. That's an imine." },
+
+{ id:"oc18", section:"OC", topic:"Aldol condensation", difficulty:"hard", dia:null,
+  q:"In a base-catalyzed aldol reaction, the nucleophile is:",
+  choices:["An enolate ion (deprotonated α-carbon)","The carbonyl oxygen","The α-carbon of a non-enolizable ketone","A hydroxide-activated water"], answer:0,
+  exp:[
+    "Correct. Base removes the α-H (pKa ~20) to make an enolate. The enolate's α-carbon has a nucleophilic lone pair (resonance-stabilized) and attacks another carbonyl.",
+    "Carbonyl O is nucleophilic too but doesn't do the C–C bond formation in aldol.",
+    "Non-enolizable ketones (no α-H) can serve as electrophile only.",
+    "Hydroxide is the base but not the reacting nucleophile."],
+  clinical:"Aldolase in glycolysis catalyzes an aldol-type C–C bond cleavage (F1,6BP → DHAP + G3P) using enamine chemistry.",
+  baby:"Base rips an H off the carbon NEXT to the C=O. That carbon now has extra electrons and becomes an angry nucleophile that punches another C=O to build a bigger molecule with a new C–C bond." },
+
+{ id:"oc19", section:"OC", topic:"Keto-enol tautomerization", difficulty:"medium", dia:null,
+  q:"Which statement about keto–enol tautomerization is TRUE?",
+  choices:["The keto form is usually more stable for simple ketones","The enol form is usually more stable","They differ by breaking a C–C bond","They are resonance structures, not tautomers"], answer:0,
+  exp:[
+    "Correct. For simple ketones/aldehydes, the keto form dominates by >99% because C=O is stronger than C=C and C–H > O–H bond enthalpies overall.",
+    "Enols dominate only in special cases (β-diketones, phenol, vitamin C).",
+    "Tautomers differ by H position only, not by breaking C–C bonds.",
+    "Tautomers are DIFFERENT compounds in equilibrium; resonance structures are one molecule with delocalized electrons."],
+  clinical:"Enol tautomers are the mutagenic form of DNA bases — rare enol tautomers can mispair (e.g., enol thymine pairs with guanine), a source of spontaneous mutations.",
+  baby:"A ketone and its 'enol twin' are two real, separate molecules that flip back and forth by moving one hydrogen. The ketone version (C=O, big and stable) wins the popularity contest almost always." },
+
+{ id:"oc20", section:"OC", topic:"Grignard reagent", difficulty:"medium", dia:null,
+  q:"Grignard reagent (CH3MgBr) + formaldehyde (H2CO) after workup gives:",
+  choices:["A primary alcohol (ethanol)","A secondary alcohol","A tertiary alcohol","A carboxylic acid"], answer:0,
+  exp:[
+    "Correct. Grignard + formaldehyde adds R and H to the C=O, giving a 1° alcohol. R–CH2–OH pattern.",
+    "Grignard + aldehyde (other than formaldehyde) → 2° alcohol.",
+    "Grignard + ketone → 3° alcohol.",
+    "Grignard adds C, not oxidizes."],
+  clinical:"Grignard chemistry lets chemists build complex carbon frameworks for drug synthesis one C–C bond at a time.",
+  baby:"A Grignard is a carbon with a metal — it's basically a carbon-shaped hammer. Smash it onto the carbonyl carbon, then add water. Whatever pattern you get depends on how many R groups the starting carbonyl had." },
+
+{ id:"oc21", section:"OC", topic:"Grignard + ester", difficulty:"hard", dia:null,
+  q:"Grignard reagent (2 equiv) + ester (RCOOR') gives after workup:",
+  choices:["A tertiary alcohol","A primary alcohol","A secondary alcohol","A carboxylic acid"], answer:0,
+  exp:[
+    "Correct. First Grignard adds → tetrahedral intermediate → collapses back to ketone (OR' leaves). Second Grignard adds to the ketone → 3° alcohol. That's why esters give 3° alcohols with 2 equiv Grignard.",
+    "Primary alcohols come from formaldehyde + Grignard.",
+    "Secondary comes from aldehyde + Grignard.",
+    "Grignard adds carbon groups; can't stop at acid without special conditions."],
+  clinical:"Predicting Grignard product patterns is a foundational exercise for retrosynthesis in medicinal chemistry.",
+  baby:"An ester takes TWO Grignard punches. The first one kicks out the OR group and makes a ketone. The second one adds again to that ketone. Two additions = three R groups + one OH = tertiary alcohol." },
+
+{ id:"oc22", section:"OC", topic:"Reduction (LiAlH4 vs NaBH4)", difficulty:"medium", dia:null,
+  q:"Which statement about carbonyl reduction is CORRECT?",
+  choices:["LiAlH4 reduces carboxylic acids and esters; NaBH4 does NOT","NaBH4 is stronger than LiAlH4","NaBH4 reduces amides","LiAlH4 is safe in water"], answer:0,
+  exp:[
+    "Correct. LiAlH4 is a powerful hydride source that reduces acids, esters, amides, and nitriles. NaBH4 is milder and generally only reduces aldehydes and ketones.",
+    "LiAlH4 >> NaBH4 in reducing power.",
+    "Amides need LiAlH4; NaBH4 leaves them alone.",
+    "LiAlH4 reacts violently with water (releases H2 gas) — must be used in dry ether/THF."],
+  clinical:"Selective reduction is critical in synthesizing chiral drug intermediates without disturbing other functional groups.",
+  baby:"LiAlH4 is the sledgehammer — reduces everything, including esters and acids. NaBH4 is the polite tap — only reduces aldehydes and ketones. Pick your weapon based on what you want left standing." },
+
+{ id:"oc23", section:"OC", topic:"Fischer esterification", difficulty:"foundation", dia:null,
+  q:"Carboxylic acid + alcohol + H⁺ (heat) gives:",
+  choices:["Ester + water","Amide + water","Ether + CO2","Anhydride"], answer:0,
+  exp:[
+    "Correct. Fischer esterification: acid-catalyzed, reversible, driven by removing water (Le Chatelier) or using excess alcohol.",
+    "Amide formation requires an amine, not an alcohol.",
+    "Ether formation is a different pathway (dehydration of alcohol + alcohol).",
+    "Anhydrides come from two carboxylic acids losing water — usually requires a stronger dehydrating agent."],
+  clinical:"Ester bonds are ubiquitous in physiology (triglycerides, aspirin, many drugs). Understanding hydrolysis vs formation predicts drug half-life.",
+  baby:"Sour thing (acid) + alcohol + a splash of strong acid + heat = fruity smell (ester) and a drop of water. It's how bananas and pineapples get their smell." },
+
+{ id:"oc24", section:"OC", topic:"Saponification", difficulty:"medium", dia:null,
+  q:"Saponification is:",
+  choices:["Base hydrolysis of an ester to a carboxylate + alcohol","Acid hydrolysis of an ester","Formation of an ester from acid + alcohol","Reduction of an ester to an alcohol"], answer:0,
+  exp:[
+    "Correct. Saponification uses OH⁻ to hydrolyze an ester. It's irreversible under those conditions because the carboxylate is deprotonated and can't be attacked back by the alcohol.",
+    "Acid hydrolysis of an ester is possible but is reversible (opposite of Fischer esterification).",
+    "That's Fischer esterification, the opposite direction.",
+    "Reduction to alcohol requires LiAlH4, not base."],
+  clinical:"Literally how soap is made: triglycerides + NaOH → glycerol + fatty acid salts (soap). Applied clinically in interpreting lipase-based fat digestion.",
+  baby:"'Saponification' comes from the Latin for soap. Base (NaOH) chops the ester bond and you can't put it back together — the pieces float away as a salt (soap) and alcohol." },
+
+{ id:"oc25", section:"OC", topic:"Amide hydrolysis", difficulty:"medium", dia:null,
+  q:"Amides are among the MOST stable carboxylic acid derivatives. Why?",
+  choices:["N lone pair strongly resonance-donates into the C=O","N is more electronegative than O","Amides have no dipole","Amides lack any π system"], answer:0,
+  exp:[
+    "Correct. The nitrogen lone pair delocalizes into the carbonyl, giving the C–N bond partial double-bond character and reducing the C=O electrophilicity — protecting amides from nucleophiles.",
+    "N is LESS electronegative than O.",
+    "Amides have a strong dipole.",
+    "Amides have a resonance π system across N–C=O; that's exactly why they're stable."],
+  clinical:"Peptide bonds are amides — their stability is why proteins hold together for years without hydrolyzing spontaneously; enzymes (proteases) are needed to break them.",
+  baby:"Nitrogen shares its extra electrons with the carbonyl, making the whole group extra sturdy. That's why amide bonds (like in proteins) don't just fall apart on their own." },
+
+{ id:"oc26", section:"OC", topic:"Decarboxylation", difficulty:"medium", dia:null,
+  q:"β-ketoacids (like acetoacetic acid) readily lose CO2 when heated because:",
+  choices:["A stable 6-membered cyclic transition state and enol product form","β-ketoacids are aromatic","The CO2 has extra electrons","Water catalyzes the loss"], answer:0,
+  exp:[
+    "Correct. β-ketoacids decarboxylate through a 6-membered transition state where the acid H moves to the ketone O, forming an enol that tautomerizes to the more stable ketone. Very favorable.",
+    "β-ketoacids are not aromatic.",
+    "CO2 is stable and neutral; not why it leaves.",
+    "Water isn't required; the mechanism is intramolecular."],
+  clinical:"Acetoacetic acid decarboxylation makes acetone in DKA (diabetic ketoacidosis) — the fruity 'ketone breath.'",
+  baby:"When the acid is exactly TWO carbons away from a ketone (β-position), it can fold up into a nice ring and pop off CO2 easily. That's why ketosis smells like nail polish remover — acetone leaks from the lungs." },
+
+{ id:"oc27", section:"OC", topic:"EAS (aromatic substitution)", difficulty:"medium", dia:null,
+  q:"In electrophilic aromatic substitution (EAS), an ACTIVATING group like -OCH3 directs the electrophile to:",
+  choices:["Ortho and para positions","Meta position","Ipso position","Randomly (no preference)"], answer:0,
+  exp:[
+    "Correct. Activating groups (donate electrons: -OR, -NR2, -OH, alkyl) stabilize the sigma complex when the electrophile attaches ortho or para (resonance places + charge next to the donor).",
+    "Meta is where DEACTIVATORS (-NO2, -CN, -COR) direct — they destabilize the ortho/para arenium ion.",
+    "Ipso substitution is rare and only for specific groups.",
+    "Directors have strong preferences, not random."],
+  clinical:"Understanding EAS directors is core to synthesizing aromatic drug scaffolds like NSAIDs (aspirin, ibuprofen) and beta-blockers.",
+  baby:"If a group on the ring is a giver (donates electrons), it makes the neighboring spots (ortho, para) rich and inviting for the next electrophile. Takers (like NO2) do the opposite — they push the electrophile to the far side (meta)." },
+
+{ id:"oc28", section:"OC", topic:"EAS directors", difficulty:"medium", dia:null,
+  q:"Which is a META-directing DEACTIVATOR?",
+  choices:["-NO2","-OCH3","-NH2","-CH3"], answer:0,
+  exp:[
+    "Correct. -NO2 withdraws electrons strongly (inductively AND by resonance). It deactivates the ring and directs meta.",
+    "-OCH3 is a strong activator, ortho/para director.",
+    "-NH2 is a strong activator, ortho/para director.",
+    "-CH3 is a weak activator (hyperconjugation), ortho/para director."],
+  clinical:"Nitro groups on aromatic drugs (metronidazole) also confer redox-active properties useful against anaerobes.",
+  baby:"Anything with a =O or ≡N pulling electrons OFF the ring is a meta director. Anything with a lone pair (or an alkyl) donating INTO the ring is an ortho/para director. That's basically the whole rule." },
+
+{ id:"oc29", section:"OC", topic:"Friedel-Crafts", difficulty:"medium", dia:null,
+  q:"Friedel-Crafts alkylation of benzene uses:",
+  choices:["Alkyl halide + AlCl3 (Lewis acid)","Alkyl halide + HCl","Alcohol + NaOH","Acyl chloride + base"], answer:0,
+  exp:[
+    "Correct. AlCl3 ionizes the alkyl halide to form a carbocation (or a strong C–Cl polarized complex) that acts as the electrophile in EAS.",
+    "HCl doesn't generate the needed carbocation.",
+    "NaOH is a base, wrong role here.",
+    "Acyl chloride + AlCl3 is Friedel-Crafts ACYLATION (gives ketone) — different reaction."],
+  clinical:"Friedel-Crafts steps appear in the synthesis of many drugs, dyes, and fragrances.",
+  baby:"AlCl3 rips a Cl off an alkyl halide to make a carbocation. The benzene ring attacks that carbocation with its π electrons. Result: an alkyl group is welded onto the ring." },
+
+{ id:"oc30", section:"OC", topic:"Chirality", difficulty:"foundation", dia:null,
+  q:"A carbon is a stereocenter (chiral center) when:",
+  choices:["It has 4 different substituents","It's sp2 hybridized","It's in a ring","It has a double bond"], answer:0,
+  exp:[
+    "Correct. A tetrahedral C bonded to 4 different groups is a stereocenter — it and its mirror image cannot be superimposed.",
+    "sp2 carbons are trigonal planar and generally not stereocenters (though they can be part of E/Z geometry).",
+    "Being in a ring doesn't automatically make a C chiral.",
+    "Double bonds create E/Z isomerism, distinct from a chiral center."],
+  clinical:"Chirality drives drug specificity: many drugs act only in one enantiomeric form (e.g., (S)-ibuprofen is the active analgesic).",
+  baby:"A chiral carbon has four different friends and looks different in the mirror (like your left vs right hand). Same molecular formula, different 3D shape." },
+
+{ id:"oc31", section:"OC", topic:"Stereoisomers", difficulty:"medium", dia:null,
+  q:"Enantiomers vs diastereomers — which is TRUE?",
+  choices:["Enantiomers are mirror images; diastereomers are not","Both are mirror images","Diastereomers have the same physical properties","Enantiomers have different melting points"], answer:0,
+  exp:[
+    "Correct. Enantiomers are non-superimposable mirror images (differ at ALL stereocenters). Diastereomers differ at some stereocenters but not others — NOT mirror images.",
+    "Only enantiomers are mirror images; diastereomers are not.",
+    "Diastereomers have DIFFERENT physical properties (mp, bp, solubility) — that's what lets you separate them.",
+    "Enantiomers have IDENTICAL physical properties (except optical rotation and reactivity with other chiral things)."],
+  clinical:"Separating enantiomers requires chiral chromatography or resolution with a chiral acid/base — expensive but essential in modern drug manufacture.",
+  baby:"Enantiomers = full mirror twins (left vs right hand). Diastereomers = related cousins that look kinda different (like your hand vs your foot). Twins are hard to tell apart with normal tests; cousins are easy." },
+
+{ id:"oc32", section:"OC", topic:"IR spectroscopy", difficulty:"medium", dia:null,
+  q:"A strong, broad IR absorption around 3200–3550 cm⁻¹ indicates:",
+  choices:["O–H stretch (alcohol/phenol)","C=O stretch (carbonyl)","C≡N stretch (nitrile)","C=C stretch (alkene)"], answer:0,
+  exp:[
+    "Correct. Alcohol/phenol O–H stretches are broad (hydrogen bonding) and centered around 3200–3550 cm⁻¹. Carboxylic acid O–H is even broader (2500–3300, 'shoulder').",
+    "C=O is a very sharp, strong peak near 1700 cm⁻¹.",
+    "C≡N is sharp near 2250 cm⁻¹.",
+    "C=C is a weak-moderate peak near 1650 cm⁻¹."],
+  clinical:"IR fingerprinting is used in pharmaceutical QC to confirm drug identity and detect counterfeits.",
+  baby:"'Big fat mountain around 3300' = OH. 'Skinny tall spike around 1700' = C=O. 'Skinny spike around 2250' = C≡N. Learn those three peaks and you can spot most functional groups on the MCAT." },
+
+{ id:"oc33", section:"OC", topic:"NMR spectroscopy", difficulty:"medium", dia:null,
+  q:"On a ¹H NMR spectrum, a peak at δ ~9-10 ppm most likely represents:",
+  choices:["Aldehyde H (RCHO)","Alkyl H","Vinyl H","OH of an alcohol"], answer:0,
+  exp:[
+    "Correct. Aldehyde protons are heavily deshielded (right next to C=O) and appear at δ 9-10 ppm — a distinctive downfield signal.",
+    "Alkyl H's appear at δ 0.5–2 ppm.",
+    "Vinyl H's (on C=C) are at δ 5-7 ppm.",
+    "OH signals are variable (1-5 ppm typically), broad, and can be exchanged out with D2O."],
+  clinical:"NMR is the primary tool for confirming drug structure after synthesis in pharmaceutical R&D.",
+  baby:"NMR shift = how hard the electron 'cloud' is being pulled off a hydrogen. Aldehyde H is right next to a hungry C=O, so its electrons are ripped away → it shows up way to the left (downfield, 9-10 ppm)." },
+
+{ id:"oc34", section:"OC", topic:"Amino acid chemistry", difficulty:"foundation", dia:null,
+  q:"At its isoelectric point (pI), an amino acid exists predominantly as:",
+  choices:["A zwitterion (NH3⁺ and COO⁻, net neutral)","Fully protonated (NH3⁺, COOH)","Fully deprotonated (NH2, COO⁻)","Neutral with no charges"], answer:0,
+  exp:[
+    "Correct. At pI, the amino group is protonated (+) and the carboxyl is deprotonated (−). Zero NET charge but the molecule carries both charges — a zwitterion.",
+    "That form dominates at very low pH (below both pKa's).",
+    "That form dominates at very high pH (above both pKa's).",
+    "A truly uncharged amino acid form is essentially never present in aqueous solution."],
+  clinical:"Isoelectric focusing (an electrophoresis method) separates proteins by their pI — used in clinical labs and proteomics research.",
+  baby:"At pI, the amino acid is like a battery with both a + end and a − end — net zero charge but not neutral inside. That balance point is where the molecule doesn't move in an electric field." },
+
+{ id:"oc35", section:"OC", topic:"Peptide bonds", difficulty:"medium", dia:null,
+  q:"The peptide bond in proteins has partial double-bond character. This means:",
+  choices:["It is planar and rotation is restricted","It rotates freely like a single bond","It is broken easily by water","It has two lone pairs on nitrogen"], answer:0,
+  exp:[
+    "Correct. Nitrogen's lone pair delocalizes into the C=O, giving the C–N bond partial double-bond character. Rotation is restricted; the 6 atoms of the peptide unit lie in a plane.",
+    "Rotation is restricted — that's the point.",
+    "Peptide bonds are quite stable; enzyme catalysis is needed for hydrolysis at biological rates.",
+    "The lone pair is delocalized, not localized as two lone pairs."],
+  clinical:"Peptide bond planarity dictates protein secondary structure (α-helix, β-sheet) via the φ and ψ dihedrals — the Ramachandran plot.",
+  baby:"The peptide bond is stuck flat like a pancake — no spinning. This makes protein backbones fold into predictable shapes (helices and sheets) instead of wiggling every which way." },
+
+/* ============================ DEVELOPMENT (DV) ============================ */
+{ id:"dv1", section:"DV", topic:"Freud psychosexual overview", difficulty:"foundation", dia:null,
+  q:"Freud's psychosexual theory proposes that personality develops through 5 stages centered on:",
+  choices:["Zones of libidinal (bodily) pleasure","Cognitive schema acquisition","Moral reasoning","Social crises"], answer:0,
+  exp:[
+    "Correct. Freud's 5 stages (oral, anal, phallic, latency, genital) each focus on a different erogenous zone. Fixation at any stage supposedly shapes adult personality.",
+    "That's Piaget's cognitive theory.",
+    "That's Kohlberg's moral development.",
+    "That's Erikson's psychosocial theory."],
+  clinical:"Freud's theory is largely historical for MCAT purposes but the vocabulary (id/ego/superego, defense mechanisms, fixation) still appears.",
+  baby:"Freud thought babies and kids get pleasure from different body parts as they grow up — mouth first, then bathroom stuff, then genitals. If you got 'stuck' at any stage, it would mess up your grown-up personality." },
+
+{ id:"dv2", section:"DV", topic:"Freud: Oral stage", difficulty:"foundation", dia:null,
+  q:"Freud's ORAL stage occurs at:",
+  choices:["0-1 year (mouth = pleasure)","1-3 years","3-6 years","6-12 years"], answer:0,
+  exp:[
+    "Correct. Oral stage: 0-1 yr. Sucking, biting, chewing. Fixation → smoking, overeating, nail-biting, or dependency in adulthood.",
+    "That's the anal stage.",
+    "That's the phallic stage.",
+    "That's the latency period."],
+  clinical:"Freudian oral fixations are speculative, but pediatricians do note oral stimulation as key soothing behavior in infancy.",
+  baby:"Ages 0-1: baby explores the world with their mouth. Everything goes in. If this stage doesn't go well, Freud said you might grow up to chew pens or smoke." },
+
+{ id:"dv3", section:"DV", topic:"Freud: Anal stage", difficulty:"foundation", dia:null,
+  q:"Freud's ANAL stage (1-3 years) centers on:",
+  choices:["Toilet training and control","Feeding and sucking","Awareness of genitals","Same-sex peer relationships"], answer:0,
+  exp:[
+    "Correct. Anal stage: 1-3 yr. Toilet training. Fixation → 'anal-retentive' (compulsive, orderly) or 'anal-expulsive' (messy, careless).",
+    "That's oral.",
+    "That's phallic.",
+    "That's latency."],
+  clinical:"Modern pediatric development frames toilet training with behavioral/reinforcement principles rather than Freudian drives.",
+  baby:"Ages 1-3: potty training. The kid is learning to control what comes out and when. Freud thought if this went badly, you'd grow up either super neat or super messy." },
+
+{ id:"dv4", section:"DV", topic:"Freud: Phallic stage", difficulty:"medium", dia:null,
+  q:"Freud's PHALLIC stage (3-6 years) is associated with:",
+  choices:["Oedipus/Electra complex","Genital maturity","Toilet training","Peer identification"], answer:0,
+  exp:[
+    "Correct. Phallic: 3-6 yr. Child unconsciously desires opposite-sex parent (Oedipus for boys, Electra for girls) and identifies with same-sex parent to resolve it.",
+    "Genital stage is the LAST stage (puberty onward).",
+    "Anal stage is toilet training.",
+    "Peer identification is more latency."],
+  clinical:"Not clinically actionable, but recognizing 'Oedipus/Electra' vocab as PHALLIC on questions is high-yield.",
+  baby:"Ages 3-6: kid notices they have (or don't have) a penis. Freud said they secretly want the opposite-sex parent and get jealous of the same-sex parent, then learn to be like the same-sex parent instead." },
+
+{ id:"dv5", section:"DV", topic:"Freud: Latency", difficulty:"foundation", dia:null,
+  q:"Freud's LATENCY period (6-12 years) is characterized by:",
+  choices:["Dormant sexual urges, focus on same-sex peers/school","Intense sexual awakening","Oedipus complex","Toilet training"], answer:0,
+  exp:[
+    "Correct. Latency: 6-12 yr. Libido is 'quiet'; child focuses on school, hobbies, same-sex friendships. Not a psychosexual conflict stage.",
+    "Sexual awakening is genital stage (puberty).",
+    "Oedipus is phallic.",
+    "Toilet training is anal."],
+  clinical:"Latency roughly overlaps with Piaget's concrete operational stage — kids at this age are cognitively concrete but socially expanding.",
+  baby:"Ages 6-12: sexual stuff goes on pause. Kids just want to hang out with same-sex friends, learn to read, play sports. It's a chill period before puberty." },
+
+{ id:"dv6", section:"DV", topic:"Freud: Genital", difficulty:"foundation", dia:null,
+  q:"Freud's GENITAL stage begins at:",
+  choices:["Puberty (~12) and continues through adulthood","Birth","Age 3","Age 6"], answer:0,
+  exp:[
+    "Correct. Genital: puberty onward. Mature sexual interests emerge. Healthy resolution of earlier stages = capacity for mature intimate relationships.",
+    "Birth is oral.",
+    "Age 3 is phallic.",
+    "Age 6 is latency."],
+  clinical:"Puberty-driven hormonal changes (Tanner staging) are the modern clinical framework for adolescent sexual development.",
+  baby:"Ages 12+: puberty hits. Sexual feelings come back but now aimed at other people. If everything went well before, adult relationships work out. If not, Freud said you'd have issues." },
+
+{ id:"dv7", section:"DV", topic:"Erikson overview", difficulty:"foundation", dia:null,
+  q:"Erikson's psychosocial theory frames development as:",
+  choices:["8 stages, each with a specific social conflict/virtue to resolve","5 psychosexual stages","4 cognitive stages","6 moral reasoning stages"], answer:0,
+  exp:[
+    "Correct. Erikson's 8 stages span the whole lifespan. Each stage presents a conflict (e.g., trust vs mistrust) that, if resolved, yields a virtue (e.g., hope).",
+    "That's Freud.",
+    "That's Piaget.",
+    "That's Kohlberg."],
+  clinical:"Erikson's framework is widely used in modern developmental medicine, pediatric psychiatry, and geriatric care.",
+  baby:"Erikson said life has 8 chapters. In each one, you face a big question. Answer it well and you gain a superpower (a 'virtue'). Fail and it haunts you." },
+
+{ id:"dv8", section:"DV", topic:"Erikson: Trust vs Mistrust", difficulty:"foundation", dia:null,
+  q:"Erikson's FIRST stage, TRUST vs MISTRUST, occurs at:",
+  choices:["0-1 year; virtue = hope","1-3 years","3-6 years","6-12 years"], answer:0,
+  exp:[
+    "Correct. 0-1 yr. If caregivers meet infant's needs reliably, the child develops trust in the world. Virtue: hope. Failure: anxiety, insecurity.",
+    "That's autonomy vs shame.",
+    "That's initiative vs guilt.",
+    "That's industry vs inferiority."],
+  clinical:"Attachment theory (Bowlby, Ainsworth) is the modern extension — 'secure' attachment ≈ successful trust resolution.",
+  baby:"Ages 0-1: Baby learns 'do the big people show up when I cry?' If yes → the world feels safe (trust). If no → the world feels scary (mistrust). Virtue earned = HOPE." },
+
+{ id:"dv9", section:"DV", topic:"Erikson: Autonomy vs Shame/Doubt", difficulty:"foundation", dia:null,
+  q:"Erikson's AUTONOMY vs SHAME/DOUBT stage occurs at:",
+  choices:["1-3 years; virtue = will","0-1 year","3-6 years","6-12 years"], answer:0,
+  exp:[
+    "Correct. 1-3 yr. Toddler asserts independence ('I do it!'). Support → autonomy and will. Overcontrol → shame and self-doubt.",
+    "That's trust vs mistrust.",
+    "That's initiative vs guilt.",
+    "That's industry vs inferiority."],
+  clinical:"Corresponds to Freud's anal stage — same age range, both frame it around control (Freud: toilet control; Erikson: self-control).",
+  baby:"Ages 1-3: Toddler wants to do everything alone — 'I do it MYSELF!' If allowed, they learn WILLPOWER. If shut down constantly, they feel ashamed of trying." },
+
+{ id:"dv10", section:"DV", topic:"Erikson: Initiative vs Guilt", difficulty:"foundation", dia:null,
+  q:"Erikson's INITIATIVE vs GUILT stage occurs at:",
+  choices:["3-6 years; virtue = purpose","1-3 years","6-12 years","12-20 years"], answer:0,
+  exp:[
+    "Correct. 3-6 yr. Preschooler starts making plans, initiating play/tasks. Encouragement → purpose. Criticism → guilt about wanting things.",
+    "That's autonomy vs shame.",
+    "That's industry vs inferiority.",
+    "That's identity vs role confusion."],
+  clinical:"This is the age of imaginative play and 'why?' questions. Preschool programs are structured to encourage initiative.",
+  baby:"Ages 3-6: Kid starts having their OWN ideas ('let's build a fort!'). If adults cheer them on → they feel PURPOSE. If shamed → they feel guilty for wanting to do stuff." },
+
+{ id:"dv11", section:"DV", topic:"Erikson: Industry vs Inferiority", difficulty:"foundation", dia:null,
+  q:"Erikson's INDUSTRY vs INFERIORITY stage occurs at:",
+  choices:["6-12 years; virtue = competence","3-6 years","12-20 years","20-40 years"], answer:0,
+  exp:[
+    "Correct. 6-12 yr. School-age kid compares self to peers, tries to master skills. Success → competence. Failure → inferiority.",
+    "That's initiative vs guilt.",
+    "That's identity vs role confusion.",
+    "That's intimacy vs isolation."],
+  clinical:"Corresponds to Freud's latency stage and Piaget's concrete operational stage — school is the central developmental setting.",
+  baby:"Ages 6-12: Kid learns skills (reading, math, sports) and constantly compares to classmates. Winning at things = COMPETENCE. Always losing = feeling inferior." },
+
+{ id:"dv12", section:"DV", topic:"Erikson: Identity vs Role Confusion", difficulty:"foundation", dia:null,
+  q:"Erikson's IDENTITY vs ROLE CONFUSION stage occurs at:",
+  choices:["12-20 years (adolescence); virtue = fidelity","6-12 years","20-40 years","40-65 years"], answer:0,
+  exp:[
+    "Correct. 12-20 yr. Adolescent explores identities ('who am I?'). Successful = coherent sense of self and fidelity to values. Failure = role confusion.",
+    "That's industry vs inferiority.",
+    "That's intimacy vs isolation.",
+    "That's generativity vs stagnation."],
+  clinical:"Marcia elaborated 4 identity statuses (achievement, moratorium, foreclosure, diffusion) built on Erikson's stage.",
+  baby:"Ages 12-20: Teen asks 'WHO am I?' They try on different personalities and beliefs. Landing on a stable identity = FIDELITY (loyal to who you are). Never figuring it out = role confusion." },
+
+{ id:"dv13", section:"DV", topic:"Erikson: Intimacy vs Isolation", difficulty:"foundation", dia:null,
+  q:"Erikson's INTIMACY vs ISOLATION stage occurs at:",
+  choices:["20-40 years (young adulthood); virtue = love","12-20 years","40-65 years","65+ years"], answer:0,
+  exp:[
+    "Correct. 20-40 yr. Adult forms deep intimate relationships. Success → love. Failure → isolation, loneliness.",
+    "That's identity vs role confusion.",
+    "That's generativity vs stagnation.",
+    "That's integrity vs despair."],
+  clinical:"Requires successful identity formation first — you can't fully be intimate without knowing who you are. Sequenced stages.",
+  baby:"Ages 20-40: 'Now that I know who I am, can I share myself with someone else?' Success = deep LOVE. Failure = feeling alone." },
+
+{ id:"dv14", section:"DV", topic:"Erikson: Generativity vs Stagnation", difficulty:"foundation", dia:null,
+  q:"Erikson's GENERATIVITY vs STAGNATION stage occurs at:",
+  choices:["40-65 years (middle adulthood); virtue = care","20-40 years","12-20 years","65+ years"], answer:0,
+  exp:[
+    "Correct. 40-65 yr. Adult contributes to next generation (raising kids, mentoring, meaningful work). Success → care. Failure → stagnation, self-absorption.",
+    "That's intimacy vs isolation.",
+    "That's identity vs role confusion.",
+    "That's integrity vs despair."],
+  clinical:"'Midlife crisis' is often reframed as unresolved generativity — feeling one hasn't contributed meaningfully.",
+  baby:"Ages 40-65: 'Am I making the world better for the next generation?' Kids, mentoring, meaningful work = CARE. Feeling stuck and useless = stagnation." },
+
+{ id:"dv15", section:"DV", topic:"Erikson: Integrity vs Despair", difficulty:"foundation", dia:null,
+  q:"Erikson's LAST stage, INTEGRITY vs DESPAIR, occurs at:",
+  choices:["65+ years; virtue = wisdom","40-65 years","20-40 years","12-20 years"], answer:0,
+  exp:[
+    "Correct. 65+. Elder reflects on life. Feeling of meaningful, well-lived life → integrity and wisdom. Regrets, unfinished business → despair.",
+    "That's generativity vs stagnation.",
+    "That's intimacy vs isolation.",
+    "That's identity vs role confusion."],
+  clinical:"'Life review therapy' in geriatric psychiatry directly targets this stage's core task.",
+  baby:"Ages 65+: 'Looking back, was my life good?' If yes → deep peace and WISDOM. If not → regret and despair." },
+
+{ id:"dv16", section:"DV", topic:"Piaget overview", difficulty:"foundation", dia:null,
+  q:"Piaget's theory of cognitive development has how many stages?",
+  choices:["4","5","6","8"], answer:0,
+  exp:[
+    "Correct. Piaget: 4 stages (sensorimotor, preoperational, concrete operational, formal operational). Each stage adds new mental capabilities.",
+    "Freud has 5 psychosexual.",
+    "Kohlberg has 6 moral.",
+    "Erikson has 8 psychosocial."],
+  clinical:"Piaget's stages are used clinically to gauge developmental delay — a school-age child stuck in preoperational thinking is a red flag.",
+  baby:"Piaget said kids' brains grow through 4 big upgrades. Each stage unlocks a new ability, like getting a new level in a video game." },
+
+{ id:"dv17", section:"DV", topic:"Piaget: Sensorimotor", difficulty:"foundation", dia:null,
+  q:"Piaget's SENSORIMOTOR stage (0-2 years) is defined by:",
+  choices:["Object permanence acquisition and learning by senses/motion","Symbolic thought","Conservation","Abstract reasoning"], answer:0,
+  exp:[
+    "Correct. 0-2 yr. Infant learns through senses and motor actions. Key milestone: object permanence (~8 months) — knowing objects exist when hidden.",
+    "Symbolic thought is preoperational.",
+    "Conservation is concrete operational.",
+    "Abstract reasoning is formal operational."],
+  clinical:"Testing object permanence with peek-a-boo is a pediatric developmental screen.",
+  baby:"Ages 0-2: Baby learns by touching, tasting, moving. The big breakthrough: realizing that when Mom leaves the room, she still EXISTS (object permanence). Before that, out of sight = gone forever." },
+
+{ id:"dv18", section:"DV", topic:"Piaget: Preoperational", difficulty:"medium", dia:null,
+  q:"Piaget's PREOPERATIONAL stage (2-7 years) is characterized by:",
+  choices:["Symbolic/pretend play, egocentrism, no conservation","Object permanence","Conservation of number and volume","Hypothetical reasoning"], answer:0,
+  exp:[
+    "Correct. 2-7 yr. Kids use words and symbols but are egocentric (can't take another's view), lack conservation (think tall glass has more water than wide one), and don't understand reversibility.",
+    "Object permanence was already achieved in sensorimotor.",
+    "Conservation comes in the NEXT stage (concrete operational).",
+    "Hypothetical reasoning is formal operational."],
+  clinical:"Egocentrism explains why young children believe you can 'see' what they see over the phone.",
+  baby:"Ages 2-7: Kid can talk and pretend but thinks EVERYONE sees the world their way (egocentric). Tall skinny glass looks like 'more' water than short wide glass because they can't hold multiple ideas at once yet." },
+
+{ id:"dv19", section:"DV", topic:"Piaget: Concrete operational", difficulty:"medium", dia:null,
+  q:"Piaget's CONCRETE OPERATIONAL stage (7-11 years) unlocks:",
+  choices:["Conservation, reversibility, logic about concrete things","Object permanence","Abstract, hypothetical reasoning","Pretend play"], answer:0,
+  exp:[
+    "Correct. 7-11 yr. Child can now conserve (amount doesn't change with shape), reverse mental operations, classify. Logic works — but only about tangible objects.",
+    "Object permanence is sensorimotor.",
+    "Abstract, hypothetical reasoning is the NEXT stage (formal operational).",
+    "Pretend play emerged in preoperational."],
+  clinical:"This maps onto the age when kids can meaningfully learn multi-step arithmetic and follow structured rules in games.",
+  baby:"Ages 7-11: Now the kid GETS IT. Water is the same amount whether it's in a tall or short glass. They can do math with real objects, follow rules in a game. But abstract 'what if' thinking is still hard." },
+
+{ id:"dv20", section:"DV", topic:"Piaget: Formal operational", difficulty:"medium", dia:null,
+  q:"Piaget's FORMAL OPERATIONAL stage (11+ years) is defined by:",
+  choices:["Abstract, hypothetical, and deductive reasoning","Concrete logic only","Egocentric symbolic play","Sensorimotor exploration"], answer:0,
+  exp:[
+    "Correct. 11+ yr. Adolescents can reason about abstractions, hypotheticals ('what if X?'), and use systematic problem-solving.",
+    "Concrete-only reasoning is the previous stage.",
+    "Egocentric symbolic play is preoperational.",
+    "Sensorimotor is the FIRST stage."],
+  clinical:"Not everyone fully reaches formal operational thinking in all domains — many adults reason concretely in unfamiliar areas.",
+  baby:"Ages 11+: Now you can think about things that DON'T exist. 'What if humans could fly?' 'What if this variable was zero?' You can do algebra, philosophy, and science experiments in your head." },
+
+{ id:"dv21", section:"DV", topic:"Kohlberg overview", difficulty:"foundation", dia:null,
+  q:"Kohlberg's theory of moral development has:",
+  choices:["3 levels, 6 stages","3 levels, 3 stages","4 levels, 8 stages","5 levels, 5 stages"], answer:0,
+  exp:[
+    "Correct. Kohlberg: 3 levels (preconventional, conventional, postconventional), each with 2 stages, for 6 total.",
+    "Only 3 stages would be 1 per level.",
+    "Wrong count.",
+    "Wrong count."],
+  clinical:"Kohlberg's 'Heinz dilemma' (steal drug to save wife?) is the classic vignette used to diagnose which stage someone reasons at.",
+  baby:"Kohlberg said people grow through 3 BIG chapters of moral thinking (preconventional, conventional, postconventional), and each chapter has 2 stages. So 6 stages total." },
+
+{ id:"dv22", section:"DV", topic:"Kohlberg: Stage 1", difficulty:"foundation", dia:null,
+  q:"Kohlberg's Stage 1 (preconventional) morality is based on:",
+  choices:["Obedience and avoiding punishment","Personal benefit / making a deal","Social approval / being nice","Universal ethical principles"], answer:0,
+  exp:[
+    "Correct. Stage 1: 'What's right? Whatever doesn't get me punished.' Common in young children.",
+    "Stage 2 is instrumental exchange ('you scratch my back, I'll scratch yours').",
+    "Stage 3 is 'good boy/nice girl' orientation.",
+    "Stage 6 is universal ethical principles (rare, highest)."],
+  clinical:"Stage 1 reasoning matches Piaget's preoperational thinking — no perspective-taking, just consequences.",
+  baby:"Stage 1: 'Bad = get in trouble. Good = don't get spanked.' The morality of a scared 4-year-old." },
+
+{ id:"dv23", section:"DV", topic:"Kohlberg: Stage 2", difficulty:"foundation", dia:null,
+  q:"Kohlberg's Stage 2 (preconventional) morality is based on:",
+  choices:["Self-interest, instrumental exchange ('what's in it for me?')","Obedience","Law and order","Universal principles"], answer:0,
+  exp:[
+    "Correct. Stage 2: 'I'll do the right thing IF I get something back.' Fairness = equal exchange.",
+    "That's Stage 1.",
+    "That's Stage 4.",
+    "That's Stage 6."],
+  clinical:"Stage 2 thinking underlies transactional reasoning in bargaining and simple contracts.",
+  baby:"Stage 2: 'I'll share my toy IF you share yours.' Everything is a trade. Good = I get something back." },
+
+{ id:"dv24", section:"DV", topic:"Kohlberg: Stage 3", difficulty:"medium", dia:null,
+  q:"Kohlberg's Stage 3 (conventional) morality is based on:",
+  choices:["'Good boy/nice girl' — seeking approval, being nice","Personal exchange","Law and order","Social contract"], answer:0,
+  exp:[
+    "Correct. Stage 3: 'Right = what the people I care about approve of.' Being seen as good and helpful matters most.",
+    "That's Stage 2.",
+    "That's Stage 4.",
+    "That's Stage 5."],
+  clinical:"Common in adolescents; explains conformity to peer group norms as a moral driver, not just social pressure.",
+  baby:"Stage 3: 'I do the right thing so people LIKE me and think I'm a good person.' Popular teen ethics." },
+
+{ id:"dv25", section:"DV", topic:"Kohlberg: Stage 4", difficulty:"medium", dia:null,
+  q:"Kohlberg's Stage 4 (conventional) morality is based on:",
+  choices:["Law and order, maintaining social order","Approval of loved ones","Universal ethics","Self-interest"], answer:0,
+  exp:[
+    "Correct. Stage 4: 'Right = following the rules and laws that keep society running.' Duty to authority and institutions.",
+    "That's Stage 3.",
+    "That's Stage 6.",
+    "That's Stage 2."],
+  clinical:"Most adults reason at Stage 4 most of the time. Underlies civic obligations like paying taxes and voting.",
+  baby:"Stage 4: 'It's wrong because it's ILLEGAL and society needs rules.' The morality of most adults most of the time." },
+
+{ id:"dv26", section:"DV", topic:"Kohlberg: Stage 5", difficulty:"medium", dia:null,
+  q:"Kohlberg's Stage 5 (postconventional) morality is based on:",
+  choices:["Social contract — laws are agreed-upon and can be changed if unjust","Rigid obedience to law","Personal profit","Punishment avoidance"], answer:0,
+  exp:[
+    "Correct. Stage 5: Laws exist because society agrees to them, but they're not absolute — unjust laws should be changed. Rights and welfare of individuals matter.",
+    "That's Stage 4 (rigid).",
+    "That's Stage 2.",
+    "That's Stage 1."],
+  clinical:"Underlies civil disobedience — MLK's letter from Birmingham jail argues from Stage 5 reasoning.",
+  baby:"Stage 5: 'Laws exist to help people. If a law hurts people, we should CHANGE it.' The morality of a thoughtful adult reformer." },
+
+{ id:"dv27", section:"DV", topic:"Kohlberg: Stage 6", difficulty:"hard", dia:null,
+  q:"Kohlberg's Stage 6 (postconventional) morality is based on:",
+  choices:["Universal ethical principles that transcend laws","Following the majority","Avoiding conflict","Reward maximization"], answer:0,
+  exp:[
+    "Correct. Stage 6 (rare): Morality guided by universal principles (justice, human dignity) that supersede any specific law. Kohlberg said very few reach this — figures like Gandhi or MLK exemplify it.",
+    "Majority-following would be Stage 3 or 4.",
+    "Conflict avoidance is not principled morality.",
+    "Reward-maximizing is Stage 2."],
+  clinical:"Feminist critics (Gilligan) argued Kohlberg's Stage 6 privileges male 'justice-based' reasoning over 'care-based' moral reasoning.",
+  baby:"Stage 6: You obey your own inner sense of 'what's truly right' even if the whole world disagrees. Almost nobody actually operates here all the time — think Gandhi, MLK." },
+
+{ id:"dv28", section:"DV", topic:"Comparison at age 6", difficulty:"medium", dia:null,
+  q:"A typical 6-year-old is in which stage of each theorist's system?",
+  choices:["Phallic → Latency (Freud), Initiative vs Guilt → Industry (Erikson), Preoperational → Concrete Op (Piaget), Preconventional (Kohlberg)","Anal, Autonomy, Sensorimotor, Postconventional","Genital, Intimacy, Formal Op, Conventional","Oral, Trust, Sensorimotor, Preconventional"], answer:0,
+  exp:[
+    "Correct. Age 6 sits at the transition point across all four theorists — leaving early childhood, entering school age.",
+    "All those are wrong ages/stages.",
+    "Those are adult stages.",
+    "Those are infant stages."],
+  clinical:"Transition years (5-7) are when developmental screening in pediatrics is especially important — many milestones cluster here.",
+  baby:"Six years old is a transition zone. Freud says the sexual stuff just went quiet (latency). Erikson says school achievement is starting to matter (industry). Piaget says logic about real objects is clicking in (concrete op). Kohlberg says they still think mostly about punishment and reward (preconventional)." },
+];
+BANK.push(...NEW_BANK3);
+
 
 /* ----------------------------------------------------------------------------
    4c. CARS — Critical Analysis & Reasoning Skills.
@@ -2367,6 +3072,51 @@ const MATCH_PAIRS = [
   { section:"PS", term:"Weber's law", def:"JND is a constant fraction of stimulus" },
   { section:"PS", term:"Ego", def:"Freud's reality-principle mediator" },
   { section:"PS", term:"Conformity", def:"Matching the group (Asch)" },
+  /* ---------------- ORGANIC CHEM ---------------- */
+  { section:"OC", term:"SN2", def:"Backside attack, inversion, 2nd order" },
+  { section:"OC", term:"SN1", def:"Carbocation, racemization, 1st order" },
+  { section:"OC", term:"E2", def:"Anti-periplanar concerted elimination" },
+  { section:"OC", term:"Zaitsev", def:"More substituted alkene wins" },
+  { section:"OC", term:"Markovnikov", def:"H to C with more H's already" },
+  { section:"OC", term:"Anti-Markovnikov", def:"Radical HBr with peroxides" },
+  { section:"OC", term:"Hydroboration-oxidation", def:"Anti-Markov, syn addition of OH" },
+  { section:"OC", term:"Ozonolysis", def:"Cleaves C=C into two carbonyls" },
+  { section:"OC", term:"PCC", def:"Mild oxidant, 1° alcohol → aldehyde" },
+  { section:"OC", term:"Fischer esterification", def:"Acid + alcohol → ester + H2O" },
+  { section:"OC", term:"Saponification", def:"Base hydrolysis of ester → salt" },
+  { section:"OC", term:"Grignard", def:"C nucleophile that hits carbonyls" },
+  { section:"OC", term:"LiAlH4", def:"Strong hydride: reduces acids/esters" },
+  { section:"OC", term:"NaBH4", def:"Mild hydride: aldehydes & ketones only" },
+  { section:"OC", term:"Aldol", def:"Enolate attacks another carbonyl" },
+  { section:"OC", term:"Imine", def:"C=N from carbonyl + 1° amine" },
+  { section:"OC", term:"Acetal", def:"Two OR groups on same C (from R-OH ×2)" },
+  { section:"OC", term:"Decarboxylation", def:"β-ketoacids lose CO2 with heat" },
+  { section:"OC", term:"EAS ortho/para", def:"Electron donors direct here" },
+  { section:"OC", term:"EAS meta", def:"Electron withdrawers (NO2, CN) direct here" },
+  { section:"OC", term:"Enantiomers", def:"Non-superimposable mirror images" },
+  { section:"OC", term:"Diastereomers", def:"Stereoisomers, NOT mirror images" },
+  { section:"OC", term:"Zwitterion", def:"Amino acid net-neutral form at pI" },
+  /* ---------------- DEVELOPMENT ---------------- */
+  { section:"DV", term:"Trust vs Mistrust", def:"Erikson 0-1 · virtue: hope" },
+  { section:"DV", term:"Autonomy vs Shame", def:"Erikson 1-3 · virtue: will" },
+  { section:"DV", term:"Initiative vs Guilt", def:"Erikson 3-6 · virtue: purpose" },
+  { section:"DV", term:"Industry vs Inferiority", def:"Erikson 6-12 · virtue: competence" },
+  { section:"DV", term:"Identity vs Role Confusion", def:"Erikson 12-20 · virtue: fidelity" },
+  { section:"DV", term:"Intimacy vs Isolation", def:"Erikson 20-40 · virtue: love" },
+  { section:"DV", term:"Generativity vs Stagnation", def:"Erikson 40-65 · virtue: care" },
+  { section:"DV", term:"Integrity vs Despair", def:"Erikson 65+ · virtue: wisdom" },
+  { section:"DV", term:"Oral stage", def:"Freud 0-1 · mouth pleasure" },
+  { section:"DV", term:"Anal stage", def:"Freud 1-3 · toilet training" },
+  { section:"DV", term:"Phallic stage", def:"Freud 3-6 · Oedipus/Electra" },
+  { section:"DV", term:"Latency", def:"Freud 6-12 · dormant libido" },
+  { section:"DV", term:"Genital stage", def:"Freud 12+ · mature sexuality" },
+  { section:"DV", term:"Sensorimotor", def:"Piaget 0-2 · object permanence" },
+  { section:"DV", term:"Preoperational", def:"Piaget 2-7 · egocentric, no conservation" },
+  { section:"DV", term:"Concrete operational", def:"Piaget 7-11 · conservation, logic" },
+  { section:"DV", term:"Formal operational", def:"Piaget 11+ · abstract reasoning" },
+  { section:"DV", term:"Preconventional", def:"Kohlberg: punishment / self-interest" },
+  { section:"DV", term:"Conventional", def:"Kohlberg: approval / law and order" },
+  { section:"DV", term:"Postconventional", def:"Kohlberg: social contract / universal ethics" },
 ];
 
 /* ============================================================================
@@ -2630,6 +3380,12 @@ function FlashcardMode({ deck, onExit, onBloom, starred, toggleStar }){
               <div style={{fontSize:".7rem",fontWeight:700,color:C.roseDeep,textTransform:"uppercase",letterSpacing:".05em",marginBottom:4}}>🩺 Clinical anchor</div>
               <div style={{fontSize:".9rem",lineHeight:1.5,color:C.plum}}>{q.clinical}</div>
             </div>
+            {q.baby && (
+              <div style={{marginTop:10,background:"linear-gradient(135deg,#fff5fa,#ffe9f3)",border:"1.5px dashed "+C.rose,borderRadius:14,padding:"12px 14px"}}>
+                <div style={{fontSize:".7rem",fontWeight:700,color:C.roseDeep,textTransform:"uppercase",letterSpacing:".05em",marginBottom:4}}>🧸 Explain like I'm 5 · Claude's take</div>
+                <div style={{fontSize:".92rem",lineHeight:1.55,color:C.ink,fontStyle:"italic"}}>{q.baby}</div>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -2728,6 +3484,12 @@ function QuizMode({ deck, onExit, onBloom, onWeak, onGrade, starred, toggleStar 
               <div style={{fontSize:".7rem",fontWeight:700,color:C.roseDeep,textTransform:"uppercase",letterSpacing:".05em",marginBottom:4}}>🩺 Clinical anchor</div>
               <div style={{fontSize:".9rem",lineHeight:1.5,color:C.plum}}>{q.clinical}</div>
             </div>
+            {q.baby && (
+              <div style={{marginTop:10,background:"linear-gradient(135deg,#fff5fa,#ffe9f3)",border:"1.5px dashed "+C.rose,borderRadius:14,padding:"12px 14px"}}>
+                <div style={{fontSize:".7rem",fontWeight:700,color:C.roseDeep,textTransform:"uppercase",letterSpacing:".05em",marginBottom:4}}>🧸 Explain like I'm 5 · Claude's take</div>
+                <div style={{fontSize:".92rem",lineHeight:1.55,color:C.ink,fontStyle:"italic"}}>{q.baby}</div>
+              </div>
+            )}
             <div style={{textAlign:"right",marginTop:14}}>
               <button className="md-btn primary" onClick={next}>{i+1>=deck.length?"See bouquet →":"Next question →"}</button>
             </div>
