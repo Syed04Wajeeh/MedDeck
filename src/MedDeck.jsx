@@ -4351,8 +4351,7 @@ function Home({ sections,setSections, diffs,setDiffs, length,setLength, garden, 
       </div>
 
       <div style={{textAlign:"center",color:"var(--on-bg-soft)",fontSize:".78rem",marginTop:26,lineHeight:1.6}}>
-        🌸 LiyaDeck · {allCards.length} cards across B/B, C/P & P/S · spaced repetition · built to help you grow ·<br/>
-        <span style={{opacity:.8}}>Study tool for exam prep — always corroborate with official AAMC materials.</span>
+        🌸 Made for my Liya
       </div>
     </div>
   );
