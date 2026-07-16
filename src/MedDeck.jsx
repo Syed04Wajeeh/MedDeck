@@ -2190,4 +2190,9 @@ export default function MedDeck(){
           <TriageMode deck={deck} onExit={exit} onBloom={bloom} onWeak={addWeak}/>
         )}
         {view==="warmup" && (
-          <War
+          <WarmUpMode onExit={exit} onBloom={bloom}/>
+        )}
+      </div>
+    </div>
+  );
+}
