@@ -6,5 +6,5 @@ import react from '@vitejs/plugin-react'
 // If you rename the repo, change this too.
 export default defineConfig({
   plugins: [react()],
-  base: '/meddeck/',
+  base: '/MedDeck/',
 })
