@@ -3381,7 +3381,7 @@ function FlashcardMode({ deck, onExit, onBloom, starred, toggleStar }){
               <div style={{fontSize:".9rem",lineHeight:1.5,color:C.plum}}>{q.clinical}</div>
             </div>
             {q.baby && (
-              <div style={{marginTop:10,background:"linear-gradient(135deg,#fff5fa,#ffe9f3)",border:"1.5px dashed "+C.rose,borderRadius:14,padding:"12px 14px"}}>
+              <div style={{marginTop:10,background:"var(--card-2)",border:"1.5px dashed "+C.rose,borderRadius:14,padding:"12px 14px"}}>
                 <div style={{fontSize:".7rem",fontWeight:700,color:C.roseDeep,textTransform:"uppercase",letterSpacing:".05em",marginBottom:4}}>🧸 Explain like I'm 5 · Claude's take</div>
                 <div style={{fontSize:".92rem",lineHeight:1.55,color:C.ink,fontStyle:"italic"}}>{q.baby}</div>
               </div>
@@ -3485,7 +3485,7 @@ function QuizMode({ deck, onExit, onBloom, onWeak, onGrade, starred, toggleStar 
               <div style={{fontSize:".9rem",lineHeight:1.5,color:C.plum}}>{q.clinical}</div>
             </div>
             {q.baby && (
-              <div style={{marginTop:10,background:"linear-gradient(135deg,#fff5fa,#ffe9f3)",border:"1.5px dashed "+C.rose,borderRadius:14,padding:"12px 14px"}}>
+              <div style={{marginTop:10,background:"var(--card-2)",border:"1.5px dashed "+C.rose,borderRadius:14,padding:"12px 14px"}}>
                 <div style={{fontSize:".7rem",fontWeight:700,color:C.roseDeep,textTransform:"uppercase",letterSpacing:".05em",marginBottom:4}}>🧸 Explain like I'm 5 · Claude's take</div>
                 <div style={{fontSize:".92rem",lineHeight:1.55,color:C.ink,fontStyle:"italic"}}>{q.baby}</div>
               </div>
